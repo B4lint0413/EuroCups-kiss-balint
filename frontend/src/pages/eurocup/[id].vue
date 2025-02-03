@@ -8,13 +8,13 @@
           <h2>Euro{{eurocup.year}}</h2>
         </div>
         <div class="sm:basis-full md:basis-[1/2]">
-          <BaseCard :title="Szervező" :content="eurocup.organiser"></BaseCard>
+          <BaseCard title="Szervező" :content="eurocup.organiser"></BaseCard>
         </div>
         <div class="sm:basis-full md:basis-[1/2]">
-          <BaseCard :title="Csapatok száma" :content="teamsCount"></BaseCard>
+          <BaseCard title="Csapatok száma" :content="teamsCount"></BaseCard>
         </div>
-        <div class="basis-full">
-
+        <div class="basis-full" v-if="teamsCount > 0">
+          <ScoreTable :teams="eurocup.teams"></ScoreTable>
         </div>
       </div>
     </div>
@@ -31,6 +31,7 @@
 
 <script>
 import BaseLayout from '@layouts/BaseLayout.vue'
+import ScoreTable from '@components/layout/ScoreTable.vue'
 import BaseCard from '@components/layout/BaseCard.vue'
 import {useEurocupStore} from '@stores/EurocupStore.mjs'
 import {mapActions} from 'pinia'
@@ -49,13 +50,15 @@ export default {
   },  
   components: {
     BaseLayout,
-    BaseCard
+    BaseCard,
+    ScoreTable
   },
   methods:{
     ...mapActions(useEurocupStore, ['getEurocup'])
   },
   async mounted(){
     this.eurocup = await this.getEurocup(this.$route.params.id);
+    this.loaded = true;
   }
 }
 </script>

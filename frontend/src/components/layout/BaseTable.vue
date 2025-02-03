@@ -8,7 +8,7 @@
         </thead>
         <tbody>
             <tr v-for="eurocup of eurocups">
-                <td>{{eurocup.year}}</td>
+                <td><RouterLink :to="{name: 'eurocup', params: {id: eurocup.id}}">{{eurocup.year}}</RouterLink></td>
                 <td><span class="bg-green-800 p-1 rounded">{{eurocup.organiser}}</span></td>
             </tr>
         </tbody>
